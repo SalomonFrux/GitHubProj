@@ -10,7 +10,7 @@ namespace TheGitHubProject
         static void Main(string[] args)
         {
            
-           // StudentDataWriter();
+            StudentDataWriter();
             StudentPromoter();
             Console.Read();
         }
