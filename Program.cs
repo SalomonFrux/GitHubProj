@@ -9,8 +9,9 @@ namespace TheGitHubProject
 
         static void Main(string[] args)
         {
-           
-            StudentDataWriter();
+
+            //StudentDataWriter();
+            //AgeSorter();
             StudentPromoter();
             Console.Read();
         }
@@ -26,8 +27,11 @@ namespace TheGitHubProject
                     mathematicsMark = 85,
                     physicsMark = 90,
                     scholarship = "received",
-                    dateOfBirth = "O2/O3/1996"
-                },
+                    dateOfBirth = Convert.ToDateTime("1996/2/3"),
+                    age = calculateage(Convert.ToDateTime("1996/2/3"))
+
+
+    },
                 new Student
                 {
                     surName = "Mary ",
@@ -37,7 +41,8 @@ namespace TheGitHubProject
                     mathematicsMark = 50,
                     physicsMark = 70,
                     scholarship = "Not received",
-                    dateOfBirth = "O1/O8/1999"
+                    dateOfBirth = Convert.ToDateTime("1999/1/8"),
+                    age = calculateage(Convert.ToDateTime("1999/1/8"))
                 },
                 new Student
                 {
@@ -48,7 +53,8 @@ namespace TheGitHubProject
                     mathematicsMark = 29,
                     physicsMark = 30,
                     scholarship = "Not received",
-                    dateOfBirth = "O1/O8/1996"
+                    dateOfBirth = Convert.ToDateTime("1996/1/8"),
+                    age = calculateage(Convert.ToDateTime("1996/1/8"))
                 },
                 new Student
                 {
@@ -59,7 +65,8 @@ namespace TheGitHubProject
                     mathematicsMark = 90,
                     physicsMark = 90,
                     scholarship = " received",
-                    dateOfBirth = "O5/O5/1998"
+                    dateOfBirth = Convert.ToDateTime("1998/5/5"),
+                    age = calculateage(Convert.ToDateTime("1998/5/5"))
                 },
                 new Student
                 {
@@ -70,9 +77,11 @@ namespace TheGitHubProject
                     mathematicsMark = 50,
                     physicsMark = 60,
                     scholarship = "Not received",
-                    dateOfBirth = "O2/O5/1997"
+                    dateOfBirth = Convert.ToDateTime( "1997/2/5"),
+                    age = calculateage(Convert.ToDateTime("1997/2/5"))
                 }
             };
+
 
 
         public static void StudentDataWriter()
@@ -93,7 +102,7 @@ namespace TheGitHubProject
             Console.ForegroundColor = System.ConsoleColor.DarkRed;
 
             fs.Close();
-            Console.WriteLine("File saved as" + Path);
+            Console.WriteLine("File saved as " + Path);
 
 
         }
@@ -102,19 +111,49 @@ namespace TheGitHubProject
             Program _StudData = new Program();
             foreach (Student stud in _StudData.students)
             {
-                if(stud.informaticsMark + stud.informaticsMark + stud.physicsMark > 150)
+                if (stud.informaticsMark + stud.informaticsMark + stud.physicsMark > 150)
                 {
-                    Console.WriteLine(stud.firstName + " " + stud.surName + "Is promoted");
+                    Console.WriteLine(stud.firstName + " " + stud.surName + "Is promoted " + stud.age);
 
                 }
                 else
                 {
-                    Console.WriteLine(stud.firstName + " " + stud.surName + "Is not promoted");
+                    Console.WriteLine(stud.firstName + " " + stud.surName + "Is not promoted " + stud.age);
                 }
             }
 
 
-            
+
+        }
+        public static void AgeSorter()
+        {
+
+        }
+        public static string calculateage(DateTime dob)
+        {
+            DateTime Now = DateTime.Now;
+            int Years = new DateTime(DateTime.Now.Subtract(dob).Ticks).Year - 1;
+            DateTime PastYearDate = dob.AddYears(Years);
+            int Months = 0;
+            for (int i = 1; i <= 12; i++)
+            {
+                if (PastYearDate.AddMonths(i) == Now)
+                {
+                    Months = i;
+                    break;
+                }
+                else if (PastYearDate.AddMonths(i) >= Now)
+                {
+                    Months = i - 1;
+                    break;
+                }
+            }
+            int Days = Now.Subtract(PastYearDate.AddMonths(Months)).Days;
+            int Hours = Now.Subtract(PastYearDate).Hours;
+            int Minutes = Now.Subtract(PastYearDate).Minutes;
+            int Seconds = Now.Subtract(PastYearDate).Seconds;
+            return String.Format("Age: {0} Year {1} Month(s) ",
+            Years, Months);
         }
     }
 }
